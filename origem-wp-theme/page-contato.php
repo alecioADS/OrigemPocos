@@ -93,7 +93,17 @@ $msg = $_GET['msg'] ?? '';
           </p>
         </div>
 
-        <div class="contact-info-item">
+        <div class="contact-map-mini">
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3771.0!2d-48.1880!3d-18.6480!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sRua%20Jo%C3%A3o%20dos%20Santos%20Moutinho%2C%20Araguari%2C%20MG!5e0!3m2!1spt-BR!2sbr!4v1"
+            width="100%"
+            height="200"
+            style="border:0; border-radius: 8px;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+
           <p class="info-label">Endereço</p>
           <p>Rua João dos Santos Moutinho<br>Araguari &mdash; MG<br>CEP 38442-194</p>
         </div>

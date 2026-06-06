@@ -13,8 +13,15 @@
     <nav class="navbar">
 
       <a href="<?php echo esc_url(home_url('/')); ?>" class="navbar__brand">
-        <span class="brand-name">ORIGEM</span>
-        <span class="brand-sub">POÇOS ARTESIANOS</span>
+        <img
+          src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.jpeg"
+          alt="Origem Poços Artesianos"
+          class="navbar__logo"
+        >
+        <div class="brand-text">
+          <span class="brand-name">ORIGEM</span>
+          <span class="brand-sub">POÇOS ARTESIANOS</span>
+        </div>
       </a>
 
       <button class="navbar__toggle" aria-label="Abrir menu" onclick="document.getElementById('nav-links').classList.toggle('open')">
@@ -25,7 +32,7 @@
         <?php
         $pages = [
           'Início'    => home_url('/'),
-          'Serviços'  => home_url('/servicos/'),
+          'Serviços' => home_url('/servicos'),
           'Sobre Nós' => home_url('/sobre/'),
           'Portfólio' => home_url('/portfolio/'),
           'Contato'   => home_url('/contato/'),

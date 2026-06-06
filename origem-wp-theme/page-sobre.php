@@ -18,22 +18,40 @@ get_header();
 
       <div class="about-text">
         <h2>Nossa História</h2>
-        <p>
-          Com 4 anos de mercado, a Origem Poços Artesianos se consolidou como referência
-          em perfuração e manutenção de poços artesianos no Centro-Oeste e estados vizinhos.
-        </p>
-        <p>
-          Atuamos em 6 estados — MG, GO, SP, DF, MT e BA — atendendo desde residências
-          até grandes empresas e fazendas com soluções completas de captação de água subterrânea.
-        </p>
-        <p class="about-note">
-          Nossa documentação está sempre em ordem: CREA, Laudos Técnicos e ART garantem
-          total conformidade legal em todas as obras realizadas.
-        </p>
-      </div>
+      <p>
+        A Origem Poços Artesianos nasceu com o propósito de oferecer soluções
+        completas em captação de água subterrânea, unindo tecnologia,
+        qualidade e compromisso com cada cliente.
+    </p>
+
+    <p>
+        Ao longo dos anos, construímos uma trajetória sólida no mercado de
+        perfuração e manutenção de poços artesianos, atendendo propriedades
+        rurais, indústrias, empresas e residências em diversas regiões.
+    </p>
+
+    <p>
+        Nossa equipe é formada por profissionais qualificados e utiliza
+        equipamentos modernos, garantindo serviços executados com segurança,
+        eficiência e dentro das normas técnicas.
+    </p>
+
+    <p>
+        Mais do que perfurar poços, buscamos proporcionar segurança hídrica,
+        produtividade e tranquilidade aos nossos clientes.
+    </p>
+
+    <p class="about-note">
+        Nossa documentação está sempre em ordem. CREA, Laudos Técnicos e ART
+        garantem total segurança ao cliente.
+    </p>
+</div>
 
       <div class="about-image">
-        [ Foto da Equipe /<br>Maquinário em Operação ]
+        <img
+          src="<?php echo get_template_directory_uri(); ?>/assets/images/img-sobre.png"
+          alt="Equipe Origem Poços Artesianos em operação noturna"
+        >
       </div>
 
     </div>

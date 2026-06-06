@@ -15,23 +15,28 @@ get_header();
 <section class="section">
   <div class="container">
     <div class="portfolio-grid">
+
       <?php
       $projects = [
-        'Poço Residencial — MG',
-        'Poço Industrial — GO',
-        'Fazenda — MT',
-        'Condomínio — SP',
-        'Empresa Rural — BA',
-        'Perfuração 800m — DF',
+        ['port1.jpeg', 'Poço Residencial — MG'],
+        ['port2.jpeg', 'Poço Industrial — GO'],
+        ['port3.jpeg', 'Fazenda — MT'],
+        ['port4.jpeg', 'Condomínio — SP'],
+        ['port5.jpeg', 'Empresa Rural — BA'],
+        ['port6.jpeg', 'Perfuração 800m — DF'],
       ];
-      foreach ($projects as $project) : ?>
+      foreach ($projects as [$img, $label]) : ?>
         <div class="portfolio-card">
           <div class="portfolio-card__image">
-            [ Foto do Projeto ]
+            <img
+              src="<?php echo get_template_directory_uri(); ?>/assets/images/<?php echo esc_attr($img); ?>"
+              alt="<?php echo esc_attr($label); ?>"
+            >
           </div>
-          <div class="portfolio-card__label"><?php echo esc_html($project); ?></div>
+          <div class="portfolio-card__label"><?php echo esc_html($label); ?></div>
         </div>
       <?php endforeach; ?>
+
     </div>
   </div>
 </section>
@@ -42,7 +47,7 @@ get_header();
     <p>Quer ver mais projetos? Entre em contato e solicite uma visita técnica.</p>
     <a href="https://wa.me/5534999328198?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20os%20projetos."
        target="_blank" rel="noopener noreferrer">
-      &rarr; WhatsApp
+      &rarr; Falar pelo WhatsApp
     </a>
   </div>
 </section>
