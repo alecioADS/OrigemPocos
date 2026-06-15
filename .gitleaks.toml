@@ -1,0 +1,13 @@
+title = "Gitleaks config — OrigemPocos"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Caminhos ignorados na varredura"
+paths = [
+  '''(?i).*\.example$''',
+  '''(?i)CLAUDE\.md$''',
+  '''(?i)SECURITY\.md$''',
+  '''(?i)\.gitleaks\.toml$''',
+]

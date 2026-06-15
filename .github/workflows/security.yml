@@ -1,0 +1,98 @@
+name: DevSecOps — Security Scan
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  schedule:
+    - cron: '0 6 * * 1'  # toda segunda 06:00 UTC
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+
+  secrets-scan:
+    name: Gitleaks (segredos)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Run Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  php-static-analysis:
+    name: PHPCS — WordPress Coding Standards
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer, cs2pr
+      - name: Install PHPCS + WPCS
+        run: |
+          composer global require --dev squizlabs/php_codesniffer wp-coding-standards/wpcs phpcompatibility/phpcompatibility-wp dealerdirect/phpcodesniffer-composer-installer
+          echo "$HOME/.composer/vendor/bin" >> $GITHUB_PATH
+      - name: Run PHPCS (WordPress + Security)
+        run: |
+          phpcs --standard=WordPress --extensions=php -p ./origem-wp-theme || true
+          phpcs --standard=WordPress-VIP-Go --report=checkstyle ./origem-wp-theme | cs2pr || true
+
+  semgrep:
+    name: Semgrep SAST
+    runs-on: ubuntu-latest
+    container:
+      image: returntocorp/semgrep
+    steps:
+      - uses: actions/checkout@v4
+      - run: semgrep ci --config=p/php --config=p/security-audit --config=p/owasp-top-ten --config=p/secrets
+        env:
+          SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
+        continue-on-error: true
+
+  trivy-fs:
+    name: Trivy — filesystem & IaC
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Trivy filesystem scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-fs.sarif'
+          severity: 'CRITICAL,HIGH,MEDIUM'
+      - name: Upload SARIF
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: 'trivy-fs.sarif'
+
+  trivy-config:
+    name: Trivy — docker-compose hardening
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'config'
+          scan-ref: '.'
+          severity: 'CRITICAL,HIGH,MEDIUM'
+
+  trivy-image:
+    name: Trivy — WordPress image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'wordpress:6.6-php8.2-apache'
+          severity: 'CRITICAL,HIGH'
+          ignore-unfixed: true
