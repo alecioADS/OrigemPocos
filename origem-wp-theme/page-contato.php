@@ -2,7 +2,19 @@
 /* Template Name: Contato */
 get_header();
 
-$msg = $_GET['msg'] ?? '';
+$msg    = isset($_GET['msg']) ? sanitize_key(wp_unslash($_GET['msg'])) : '';
+$campos = isset($_GET['campos']) ? sanitize_text_field(wp_unslash($_GET['campos'])) : '';
+
+$label_map = [
+    'nome'     => 'Nome completo',
+    'telefone' => 'Telefone',
+    'endereco' => 'Endereço',
+];
+$faltando = [];
+foreach (explode(',', $campos) as $c) {
+    $c = trim($c);
+    if (isset($label_map[$c])) $faltando[] = $label_map[$c];
+}
 ?>
 
 <!-- ── HERO BANNER ───────────────────────────────────────────────────── -->
@@ -25,7 +37,17 @@ $msg = $_GET['msg'] ?? '';
 
         <?php if ($msg === 'success') : ?>
           <div class="form-message form-message--success">
-            Solicitação enviada com sucesso! Entraremos em contato em breve.
+            <strong>Solicitação enviada com sucesso!</strong> Entraremos em contato em breve.
+          </div>
+        <?php elseif ($msg === 'missing') : ?>
+          <div class="form-message form-message--error">
+            <strong>Preencha os campos obrigatórios:</strong>
+            <?php echo esc_html(implode(', ', $faltando) ?: 'verifique os dados'); ?>.
+          </div>
+        <?php elseif ($msg === 'wait') : ?>
+          <div class="form-message form-message--error">
+            Você acabou de enviar uma solicitação. Aguarde 30 segundos antes de enviar outra,
+            ou fale conosco pelo WhatsApp para retorno imediato.
           </div>
         <?php elseif ($msg === 'error') : ?>
           <div class="form-message form-message--error">
@@ -35,6 +57,12 @@ $msg = $_GET['msg'] ?? '';
 
         <form method="post" action="">
           <?php wp_nonce_field('origem_contact_form', 'origem_contact_nonce'); ?>
+
+          <!-- Honeypot anti-spam (escondido via CSS, deve ficar vazio) -->
+          <div class="form-group" aria-hidden="true" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">
+            <label for="origem_website">Não preencha</label>
+            <input type="text" id="origem_website" name="origem_website" value="" tabindex="-1" autocomplete="off">
+          </div>
 
           <div class="form-group">
             <label for="contact_nome">Nome completo</label>
