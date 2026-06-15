@@ -2,30 +2,60 @@ services:
 
   db:
     image: mysql:8.0
-    restart: always
-    environment:
-      MYSQL_DATABASE: origem_wp
-      MYSQL_USER: origem
-      MYSQL_PASSWORD: origem123
-      MYSQL_ROOT_PASSWORD: root123
+    restart: unless-stopped
+    env_file: .env
     volumes:
       - db_data:/var/lib/mysql
+    networks:
+      - backend
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -p\"$$MYSQL_ROOT_PASSWORD\""]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
 
   wordpress:
-    image: wordpress:latest
-    restart: always
+    image: wordpress:6.6-php8.2-apache
+    restart: unless-stopped
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     ports:
-      - "8080:80"
+      - "127.0.0.1:8080:80"
+    env_file: .env
     environment:
-      WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_NAME: origem_wp
-      WORDPRESS_DB_USER: origem
-      WORDPRESS_DB_PASSWORD: origem123
+      WORDPRESS_CONFIG_EXTRA: |
+        define('DISALLOW_FILE_EDIT', true);
+        define('DISALLOW_FILE_MODS', false);
+        define('FORCE_SSL_ADMIN', false);
+        define('WP_AUTO_UPDATE_CORE', 'minor');
+        define('AUTOMATIC_UPDATER_DISABLED', false);
+        define('WP_POST_REVISIONS', 5);
+        define('EMPTY_TRASH_DAYS', 7);
+        define('AUTH_KEY',         getenv('WORDPRESS_AUTH_KEY'));
+        define('SECURE_AUTH_KEY',  getenv('WORDPRESS_SECURE_AUTH_KEY'));
+        define('LOGGED_IN_KEY',    getenv('WORDPRESS_LOGGED_IN_KEY'));
+        define('NONCE_KEY',        getenv('WORDPRESS_NONCE_KEY'));
+        define('AUTH_SALT',        getenv('WORDPRESS_AUTH_SALT'));
+        define('SECURE_AUTH_SALT', getenv('WORDPRESS_SECURE_AUTH_SALT'));
+        define('LOGGED_IN_SALT',   getenv('WORDPRESS_LOGGED_IN_SALT'));
+        define('NONCE_SALT',       getenv('WORDPRESS_NONCE_SALT'));
     volumes:
       - wp_data:/var/www/html
-      - ./origem-wp-theme:/var/www/html/wp-content/themes/origem-wp-theme
+      - ./origem-wp-theme:/var/www/html/wp-content/themes/origem-wp-theme:ro
+    networks:
+      - backend
+      - frontend
+    security_opt:
+      - no-new-privileges:true
+
+networks:
+  backend:
+    internal: true
+  frontend:
 
 volumes:
   db_data:

@@ -2,6 +2,19 @@
 .DS_Store
 Thumbs.db
 
+# Segredos e configurações locais
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+secrets/
+
+# Logs
+*.log
+logs/
+
 # Arquivos de design (binários grandes)
 *.fig
 
@@ -11,7 +24,20 @@ docker-volumes/
 # WordPress gerado pelo Docker (não versionar core do WP)
 # Apenas o tema é versionado
 
-# Editor
+# Editor / IDE
 .vscode/
 .idea/
 *.swp
+*~
+
+# Dependências
+node_modules/
+vendor/
+
+# Relatórios de segurança
+.scannerwork/
+trivy-report.*
+phpcs-report.*
+
+# Backups de imagens originais antes da otimização
+_originals/

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**ORIGEM** — Design System V2.0 for a Poços Artesianos (Artesian Wells) application.  
+**ORIGEM** — Design System V2.0 for a Poços Artesianos (Artesian Wells) application.
 Academic project (Projeto Integrador — ADS course).
 
 This repository currently holds design assets only:
