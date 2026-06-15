@@ -12,19 +12,16 @@
   <div class="container">
     <nav class="navbar">
 
-      <a href="<?php echo esc_url(home_url('/')); ?>" class="navbar__brand">
+      <a href="<?php echo esc_url(home_url('/')); ?>" class="navbar__brand" aria-label="<?php esc_attr_e('Origem Poços Artesianos — Início', 'origem'); ?>">
         <img
-          src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.jpeg"
-          alt="Origem Poços Artesianos"
+          src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/logoorigemfinal.png'); ?>"
+          alt="<?php esc_attr_e('Origem Poços Artesianos', 'origem'); ?>"
           class="navbar__logo"
+          width="80" height="80"
         >
-        <div class="brand-text">
-          <span class="brand-name">ORIGEM</span>
-          <span class="brand-sub">POÇOS ARTESIANOS</span>
-        </div>
       </a>
 
-      <button class="navbar__toggle" aria-label="Abrir menu" onclick="document.getElementById('nav-links').classList.toggle('open')">
+      <button class="navbar__toggle" id="navbar-toggle" aria-label="<?php esc_attr_e('Abrir menu', 'origem'); ?>" aria-expanded="false" aria-controls="nav-links">
         <span></span><span></span><span></span>
       </button>
 
@@ -32,15 +29,21 @@
         <?php
         $pages = [
           'Início'    => home_url('/'),
-          'Serviços' => home_url('/servicos'),
+          'Serviços'  => home_url('/servicos'),
           'Sobre Nós' => home_url('/sobre/'),
           'Portfólio' => home_url('/portfolio/'),
           'Contato'   => home_url('/contato/'),
         ];
+
+        $current_path = isset($_SERVER['REQUEST_URI'])
+          ? rtrim(esc_url_raw(wp_unslash($_SERVER['REQUEST_URI'])), '/')
+          : '';
+
         foreach ($pages as $label => $url) :
-          $active = (rtrim($_SERVER['REQUEST_URI'], '/') === rtrim(parse_url($url, PHP_URL_PATH), '/')) ? 'active' : '';
+          $page_path = rtrim((string) wp_parse_url($url, PHP_URL_PATH), '/');
+          $active    = ($current_path === $page_path) ? 'active' : '';
         ?>
-          <li><a href="<?php echo esc_url($url); ?>" class="<?php echo $active; ?>"><?php echo esc_html($label); ?></a></li>
+          <li><a href="<?php echo esc_url($url); ?>" class="<?php echo esc_attr($active); ?>"><?php echo esc_html($label); ?></a></li>
         <?php endforeach; ?>
       </ul>
 

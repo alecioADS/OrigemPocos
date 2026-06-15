@@ -29,7 +29,7 @@ get_header();
         <div class="portfolio-card">
           <div class="portfolio-card__image">
             <img
-              src="<?php echo get_template_directory_uri(); ?>/assets/images/<?php echo esc_attr($img); ?>"
+              src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/' . $img); ?>"
               alt="<?php echo esc_attr($label); ?>"
             >
           </div>

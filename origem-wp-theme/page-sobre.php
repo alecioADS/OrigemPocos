@@ -49,7 +49,7 @@ get_header();
 
       <div class="about-image">
         <img
-          src="<?php echo get_template_directory_uri(); ?>/assets/images/img-sobre.png"
+          src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/img-sobre.png'); ?>"
           alt="Equipe Origem Poços Artesianos em operação noturna"
         >
       </div>
