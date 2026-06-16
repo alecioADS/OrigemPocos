@@ -363,4 +363,60 @@ Resumo do que foi feito em comparação com o repositório base:
 
 ## Licença
 
-Projeto acadêmico — Projeto Integrador ADS · IMEPAC. Código sob GPL v2 (herda do WordPress).
+Este projeto tem **duas camadas distintas** de propriedade — o código é livre, mas a
+identidade visual da empresa é protegida.
+
+### Código-fonte
+
+O código PHP, CSS, JavaScript e configurações deste repositório
+(`origem-wp-theme/`, `docker-compose.yml`, `.github/`, `docs/`, etc.) está sob a
+licença **GNU General Public License v2 ou posterior (GPLv2+)**, herdada do
+WordPress.
+
+Isso significa que você **pode**:
+
+- ✅ Usar o código em projetos pessoais, acadêmicos ou comerciais
+- ✅ Modificar, adaptar e redistribuir
+- ✅ Estudar a implementação para fins de aprendizado
+- ✅ Incorporar trechos em outros projetos (respeitando GPLv2)
+
+Você **deve**:
+
+- 📋 Manter o aviso de copyright e a referência à licença
+- 📋 Distribuir versões modificadas também sob GPLv2+
+- 📋 Disponibilizar o código-fonte se redistribuir um produto derivado
+
+### Identidade visual e conteúdo da empresa
+
+Os seguintes itens **NÃO** estão sob GPL — são propriedade da **Origem Poços
+Artesianos** e não podem ser reutilizados sem autorização expressa:
+
+- Marca, logo e nome "Origem Poços Artesianos"
+   (`assets/images/logoorigemfinal.png`, `assets/images/logo.jpeg`)
+- Fotografias da equipe e das obras
+   (`hero-home.png`, `img-sobre.png`, `port1.jpeg` ... `port6.jpeg`)
+- Textos institucionais sobre serviços, histórico e portfólio
+- Dados de contato (telefone, endereço, área de atuação)
+
+Se quiser usar este tema como base para outro projeto, **substitua todos esses
+itens** pelos da sua empresa antes de publicar.
+
+### Bibliotecas de terceiros
+
+Mantêm suas licenças originais:
+
+- **WordPress** — GPLv2+ (<https://wordpress.org/about/license/>)
+- **Inter font** (Google Fonts) — SIL Open Font License 1.1
+- **Ícone do WhatsApp** — marca registrada da Meta Platforms, usado conforme
+  diretrizes para apps de terceiros (<https://about.meta.com/brand/resources/whatsapp/whatsapp-brand/>)
+
+### Contexto acadêmico
+
+Este projeto foi desenvolvido como **Projeto Integrador** do curso de Análise e
+Desenvolvimento de Sistemas (ADS) do **IMEPAC**. O uso é livre para fins
+educacionais, com crédito ao autor original quando apropriado.
+
+### Contato
+
+Dúvidas sobre licenciamento ou uso comercial: abra uma issue no repositório
+ou entre em contato com a Origem Poços Artesianos.
